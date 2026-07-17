@@ -72,9 +72,9 @@ export default function Navbar() {
       {/* Logo */}
       <Link
         href="/"
-        className="bg-blue-600 hover:bg-blue-700 rounded-full w-12 h-12 flex items-center justify-center pointer-events-auto transition-colors cursor-pointer"
+        className="bg-brand hover:bg-brand-dark rounded-full w-12 h-12 flex items-center justify-center pointer-events-auto transition-colors cursor-pointer"
       >
-        <QrCode className="w-6 h-6 text-white" />
+        <QrCode className="w-6 h-6 text-neutral-900" />
       </Link>
 
       {/* Navigation Pill - Desktop */}
@@ -89,7 +89,7 @@ export default function Navbar() {
             }
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors duration-200 cursor-pointer ${
               isHome && activeSection === section.id
-                ? 'bg-blue-600 text-white'
+                ? 'bg-brand text-neutral-900'
                 : 'text-neutral-600 hover:text-neutral-900'
             }`}
           >
@@ -125,7 +125,7 @@ export default function Navbar() {
               }
               className={`block w-full text-center px-4 py-3 rounded-xl text-sm font-medium transition-colors duration-200 cursor-pointer ${
                 isHome && activeSection === section.id
-                  ? 'bg-blue-600 text-white'
+                  ? 'bg-brand text-neutral-900'
                   : 'text-neutral-700 hover:bg-neutral-100'
               }`}
             >

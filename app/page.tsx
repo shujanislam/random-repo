@@ -208,7 +208,7 @@ export default function Home() {
             <div className="card p-8 divide-y divide-neutral-200">
               {solutionPoints.map((point) => (
                 <div key={point.title} className="flex gap-4 py-5 first:pt-0 last:pb-0">
-                  <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                   <div>
                     <h4 className="font-medium mb-1">{point.title}</h4>
                     <p className="text-neutral-500 text-sm leading-relaxed">
@@ -228,12 +228,89 @@ export default function Home() {
             <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-6">
               {journey.map((step, index) => (
                 <div key={step} className="space-y-3">
-                  <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center text-sm font-medium text-white">
+                  <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-sm font-medium text-neutral-900">
                     {index + 1}
                   </div>
                   <p className="text-sm text-neutral-600">{step}</p>
                 </div>
               ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Showcase Section */}
+      <section className="px-6 py-28 border-t border-neutral-200">
+        <div className="max-w-6xl mx-auto w-full space-y-24">
+          {/* Row 1 - text left, bike right */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="space-y-5">
+              <span className="eyebrow">For two-wheelers</span>
+              <h2 className="section-title">Built for every bike on the road.</h2>
+              <p className="text-lg text-neutral-600 leading-relaxed max-w-xl">
+                From daily commuters to weekend riders, TruTag keeps you
+                reachable without ever revealing your number. A quick scan is all
+                it takes to connect — safely and privately.
+              </p>
+              <ul className="space-y-3 pt-2">
+                <li className="flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
+                  <span className="text-neutral-700">
+                    Weatherproof stickers that survive every ride.
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
+                  <span className="text-neutral-700">
+                    Instant alerts if your bike needs attention.
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-50">
+              <Image
+                src="/bike.png"
+                alt="TruTag on a motorbike"
+                width={720}
+                height={540}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Row 2 - car left, text right */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-50 lg:order-1">
+              <Image
+                src="/car.png"
+                alt="TruTag on a car"
+                width={720}
+                height={540}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="space-y-5 lg:order-2">
+              <span className="eyebrow">For four-wheelers</span>
+              <h2 className="section-title">Peace of mind for your car.</h2>
+              <p className="text-lg text-neutral-600 leading-relaxed max-w-xl">
+                Blocked someone in? Left your lights on? TruTag lets anyone reach
+                you in seconds — while your personal details stay completely
+                hidden behind our secure channel.
+              </p>
+              <ul className="space-y-3 pt-2">
+                <li className="flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
+                  <span className="text-neutral-700">
+                    Ideal for parking, emergencies, and accidents.
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
+                  <span className="text-neutral-700">
+                    Encrypted messaging with zero exposed contact info.
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
@@ -253,8 +330,8 @@ export default function Home() {
                 key={title}
                 className="bg-white p-8 hover:bg-neutral-50 transition-colors"
               >
-                <div className="w-11 h-11 rounded-lg bg-blue-50 flex items-center justify-center mb-5">
-                  <Icon className="w-5 h-5 text-blue-600" />
+                <div className="w-11 h-11 rounded-lg bg-brand-soft flex items-center justify-center mb-5">
+                  <Icon className="w-5 h-5 text-brand" />
                 </div>
                 <h3 className="text-lg font-semibold mb-2">{title}</h3>
                 <p className="text-neutral-600 text-sm leading-relaxed">{body}</p>
@@ -303,19 +380,19 @@ export default function Home() {
 
             <ul className="space-y-4 pt-2">
               <li className="flex gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                 <span className="text-neutral-700">
                   Real-time, private notifications the moment someone reaches out.
                 </span>
               </li>
               <li className="flex gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                 <span className="text-neutral-700">
                   Manage every sticker and vehicle from a single dashboard.
                 </span>
               </li>
               <li className="flex gap-3">
-                <CheckCircle className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" />
+                <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                 <span className="text-neutral-700">
                   Encrypted messaging that keeps your phone number hidden.
                 </span>
@@ -357,7 +434,7 @@ export default function Home() {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <QrCode className="w-5 h-5 text-blue-600" />
+                <QrCode className="w-5 h-5 text-brand" />
                 <span className="text-base font-semibold tracking-tight">TruTag</span>
               </div>
               <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">
@@ -370,17 +447,17 @@ export default function Home() {
               <h4 className="text-sm font-medium text-neutral-900">Product</h4>
               <ul className="space-y-3 text-sm text-neutral-500">
                 <li>
-                  <a href="/#features" className="hover:text-blue-600 transition-colors">
+                  <a href="/#features" className="hover:text-brand transition-colors">
                     Features
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-600 transition-colors">
+                  <a href="#" className="hover:text-brand transition-colors">
                     Pricing
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-600 transition-colors">
+                  <a href="#" className="hover:text-brand transition-colors">
                     Security
                   </a>
                 </li>
@@ -392,17 +469,17 @@ export default function Home() {
               <h4 className="text-sm font-medium text-neutral-900">Company</h4>
               <ul className="space-y-3 text-sm text-neutral-500">
                 <li>
-                  <a href="/#about" className="hover:text-blue-600 transition-colors">
+                  <a href="/#about" className="hover:text-brand transition-colors">
                     About
                   </a>
                 </li>
                 <li>
-                  <a href="/#team" className="hover:text-blue-600 transition-colors">
+                  <a href="/#team" className="hover:text-brand transition-colors">
                     Team
                   </a>
                 </li>
                 <li>
-                  <a href="#" className="hover:text-blue-600 transition-colors">
+                  <a href="#" className="hover:text-brand transition-colors">
                     Blog
                   </a>
                 </li>
@@ -414,12 +491,12 @@ export default function Home() {
               <h4 className="text-sm font-medium text-neutral-900">Legal</h4>
               <ul className="space-y-3 text-sm text-neutral-500">
                 <li>
-                  <a href="/terms" className="hover:text-blue-600 transition-colors">
+                  <a href="/terms" className="hover:text-brand transition-colors">
                     Terms &amp; Conditions
                   </a>
                 </li>
                 <li>
-                  <a href="/privacy" className="hover:text-blue-600 transition-colors">
+                  <a href="/privacy" className="hover:text-brand transition-colors">
                     Privacy Policy
                   </a>
                 </li>
@@ -433,13 +510,13 @@ export default function Home() {
               &copy; 2026 TruTag. All rights reserved.
             </p>
             <div className="flex gap-5">
-              <a href="#" aria-label="Email" className="text-neutral-400 hover:text-blue-600 transition-colors">
+              <a href="#" aria-label="Email" className="text-neutral-400 hover:text-brand transition-colors">
                 <Mail className="w-4 h-4" />
               </a>
-              <a href="#" aria-label="Website" className="text-neutral-400 hover:text-blue-600 transition-colors">
+              <a href="#" aria-label="Website" className="text-neutral-400 hover:text-brand transition-colors">
                 <Globe className="w-4 h-4" />
               </a>
-              <a href="#" aria-label="Share" className="text-neutral-400 hover:text-blue-600 transition-colors">
+              <a href="#" aria-label="Share" className="text-neutral-400 hover:text-brand transition-colors">
                 <Share2 className="w-4 h-4" />
               </a>
             </div>

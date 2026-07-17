@@ -118,6 +118,9 @@
 
 @theme inline {
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --color-brand: #e5de00;
+  --color-brand-dark: #c99f00;
+  --color-brand-soft: #fbf3d0;
 }
 
 @layer base {
@@ -139,7 +142,7 @@
   }
   .eyebrow::before {
     content: '';
-    @apply h-1.5 w-1.5 rounded-full bg-blue-600;
+    @apply h-1.5 w-1.5 rounded-full bg-brand;
   }
   .hero-title {
     @apply text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.06] text-neutral-900 text-balance;
@@ -148,7 +151,7 @@
     @apply text-3xl md:text-4xl font-semibold tracking-tight text-neutral-900 text-balance;
   }
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-6 py-3 text-sm font-medium text-white transition-colors duration-200 hover:bg-blue-700 cursor-pointer;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-medium text-neutral-900 transition-colors duration-200 hover:bg-brand-dark cursor-pointer;
   }
   .btn-secondary {
     @apply inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-medium text-neutral-900 transition-colors duration-200 hover:border-neutral-400 hover:bg-neutral-50 cursor-pointer;
