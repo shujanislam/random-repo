@@ -19,33 +19,33 @@ import TeamCard, { type TeamMember } from '@/components/TeamCard';
 
 const team: TeamMember[] = [
   {
-    name: 'Bitul',
-    designation: 'Founder & Visionary',
-    note: "We're not just building a product; we're building trust in the automotive community of India.",
+    name: 'I.Islam',
+    designation: 'Founder & CEO',
+    note: "Leading TruTag's vision and business strategy.",
     photo: '/placeholder-user.jpg',
   },
   {
-    name: 'Aarav Sharma',
-    designation: 'Co-Founder & CTO',
-    note: 'Privacy should be the default, not a feature. That belief drives every line of code we ship.',
+    name: 'Mukut Boruah',
+    designation: 'Chief Growth Officer (CGO)',
+    note: 'Driving partnerships and business growth.',
     photo: '/placeholder-user.jpg',
   },
   {
-    name: 'Priya Menon',
-    designation: 'Head of Product',
-    note: 'Great security is invisible. Our job is to keep you safe without ever getting in your way.',
+    name: 'Raju Ahmed',
+    designation: 'Chief Business Development Officer (CBDO)',
+    note: 'Building dealer and customer relationships.',
     photo: '/placeholder-user.jpg',
   },
   {
-    name: 'Rohan Gupta',
-    designation: 'Lead Engineer',
-    note: 'Every scan is a promise. We engineer TruTag to keep that promise, every single time.',
+    name: 'Bornali Medhi',
+    designation: 'Chief Marketing Officer (CMO)',
+    note: 'Leading branding and marketing initiatives.',
     photo: '/placeholder-user.jpg',
   },
   {
-    name: 'Sneha Iyer',
-    designation: 'Head of Growth',
-    note: 'We are building for every vehicle owner in India — one trusted connection at a time.',
+    name: 'Nagodip Adhikary',
+    designation: 'Chief Technology Officer (CTO)',
+    note: 'Leading product architecture and technology.',
     photo: '/placeholder-user.jpg',
   },
 ];
@@ -98,16 +98,6 @@ const solutionPoints = [
   },
 ];
 
-const journey = [
-  'Buy',
-  'Activate',
-  'Register',
-  'Install',
-  'Share',
-  'Connect',
-  'Repeat',
-];
-
 export default function Home() {
   return (
     <div className="bg-white text-neutral-900">
@@ -117,9 +107,9 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="min-h-screen flex flex-col justify-center px-6 pt-32 pb-16"
+        className="hero-wave relative min-h-screen overflow-hidden flex flex-col justify-center px-6 pt-32 pb-16"
       >
-        <div className="max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
           {/* Left panel - Hero text */}
           <div className="space-y-8">
             <span className="eyebrow">Privacy-first vehicle identification</span>
@@ -136,9 +126,9 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-3 pt-2">
               <button className="btn-primary">
-                Get Started <ArrowRight className="w-4 h-4" />
+                Buy Now <ArrowRight className="w-4 h-4" />
               </button>
-              <button className="btn-secondary">Learn More</button>
+              <button className="btn-secondary">Contact Us</button>
             </div>
 
             <div className="pt-10 grid grid-cols-3 gap-8 border-t border-neutral-200">
@@ -225,15 +215,69 @@ export default function Home() {
             <h3 className="text-sm font-medium uppercase tracking-[0.18em] text-neutral-500 mb-8">
               How it works
             </h3>
-            <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-6">
-              {journey.map((step, index) => (
-                <div key={step} className="space-y-3">
-                  <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-sm font-medium text-neutral-900">
-                    {index + 1}
-                  </div>
-                  <p className="text-sm text-neutral-600">{step}</p>
+            <div className="space-y-12">
+              <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-neutral-50 p-6">
+                  <Image
+                    src="/qr.png"
+                    alt="TruTag QR sticker"
+                    width={640}
+                    height={480}
+                    className="w-full h-full object-contain"
+                  />
                 </div>
-              ))}
+                <div className="space-y-3">
+                  <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-sm font-medium text-neutral-900">
+                    1
+                  </div>
+                  <h4 className="text-2xl font-semibold tracking-tight">You need to buy</h4>
+                  <p className="text-neutral-600 leading-relaxed">
+                    Get your TruTag smart QR sticker and activate it for your vehicle.
+                  </p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="space-y-3">
+                  <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-sm font-medium text-neutral-900">
+                    2
+                  </div>
+                  <h4 className="text-2xl font-semibold tracking-tight">Stick it in the vehicle</h4>
+                  <p className="text-neutral-600 leading-relaxed">
+                    Place the sticker where it is easy to notice and scan when someone needs to reach you.
+                  </p>
+                </div>
+                <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-neutral-50">
+                  <Image
+                    src="/car.png"
+                    alt="TruTag sticker on a car"
+                    width={640}
+                    height={480}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="aspect-[4/3] rounded-3xl overflow-hidden bg-neutral-50">
+                  <Image
+                    src="/scanning.png"
+                    alt="Scanning a TruTag QR sticker"
+                    width={640}
+                    height={480}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="space-y-3">
+                  <div className="w-9 h-9 rounded-full bg-brand flex items-center justify-center text-sm font-medium text-neutral-900">
+                    3
+                  </div>
+                  <h4 className="text-2xl font-semibold tracking-tight">Scanning connects securely</h4>
+                  <p className="text-neutral-600 leading-relaxed">
+                    Anyone can scan the code to contact you while your phone number stays private.
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -242,54 +286,9 @@ export default function Home() {
       {/* Showcase Section */}
       <section className="px-6 py-28 border-t border-neutral-200">
         <div className="max-w-6xl mx-auto w-full space-y-24">
-          {/* Row 1 - text left, bike right */}
+          {/* Row 1 - text left, car right */}
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <div className="space-y-5">
-              <span className="eyebrow">For two-wheelers</span>
-              <h2 className="section-title">Built for every bike on the road.</h2>
-              <p className="text-lg text-neutral-600 leading-relaxed max-w-xl">
-                From daily commuters to weekend riders, TruTag keeps you
-                reachable without ever revealing your number. A quick scan is all
-                it takes to connect — safely and privately.
-              </p>
-              <ul className="space-y-3 pt-2">
-                <li className="flex gap-3">
-                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
-                  <span className="text-neutral-700">
-                    Weatherproof stickers that survive every ride.
-                  </span>
-                </li>
-                <li className="flex gap-3">
-                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
-                  <span className="text-neutral-700">
-                    Instant alerts if your bike needs attention.
-                  </span>
-                </li>
-              </ul>
-            </div>
-            <div className="aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-50">
-              <Image
-                src="/bike.png"
-                alt="TruTag on a motorbike"
-                width={720}
-                height={540}
-                className="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-
-          {/* Row 2 - car left, text right */}
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            <div className="aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-50 lg:order-1">
-              <Image
-                src="/car.png"
-                alt="TruTag on a car"
-                width={720}
-                height={540}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <div className="space-y-5 lg:order-2">
               <span className="eyebrow">For four-wheelers</span>
               <h2 className="section-title">Peace of mind for your car.</h2>
               <p className="text-lg text-neutral-600 leading-relaxed max-w-xl">
@@ -308,6 +307,51 @@ export default function Home() {
                   <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
                   <span className="text-neutral-700">
                     Encrypted messaging with zero exposed contact info.
+                  </span>
+                </li>
+              </ul>
+            </div>
+            <div className="aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-50">
+              <Image
+                src="/car.png"
+                alt="TruTag on a car"
+                width={720}
+                height={540}
+                className="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Row 2 - bike left, text right */}
+          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+            <div className="aspect-[4/3] w-full rounded-3xl overflow-hidden bg-neutral-50 lg:order-1">
+              <Image
+                src="/bike.png"
+                alt="TruTag on a motorbike"
+                width={720}
+                height={540}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="space-y-5 lg:order-2">
+              <span className="eyebrow">For two-wheelers</span>
+              <h2 className="section-title">Built for every bike on the road.</h2>
+              <p className="text-lg text-neutral-600 leading-relaxed max-w-xl">
+                From daily commuters to weekend riders, TruTag keeps you
+                reachable without ever revealing your number. A quick scan is all
+                it takes to connect — safely and privately.
+              </p>
+              <ul className="space-y-3 pt-2">
+                <li className="flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
+                  <span className="text-neutral-700">
+                    Weatherproof stickers that survive every ride.
+                  </span>
+                </li>
+                <li className="flex gap-3">
+                  <CheckCircle className="w-5 h-5 text-brand flex-shrink-0 mt-0.5" />
+                  <span className="text-neutral-700">
+                    Instant alerts if your bike needs attention.
                   </span>
                 </li>
               </ul>

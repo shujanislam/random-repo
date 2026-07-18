@@ -96,6 +96,13 @@ export default function Navbar() {
             {section.label}
           </Link>
         ))}
+        <Link
+          href={hrefFor('hero')}
+          onClick={(e) => handleNav(e, 'hero')}
+          className="px-4 py-1.5 rounded-full bg-brand text-sm font-medium text-neutral-900 transition-colors duration-200 hover:bg-brand-dark cursor-pointer"
+        >
+          Buy Now
+        </Link>
       </div>
 
       {/* Mobile Menu Button */}
@@ -132,6 +139,13 @@ export default function Navbar() {
               {section.label}
             </Link>
           ))}
+          <Link
+            href={hrefFor('hero')}
+            onClick={(e) => handleNav(e, 'hero')}
+            className="block w-full text-center px-4 py-3 rounded-xl bg-brand text-sm font-medium text-neutral-900 transition-colors duration-200 hover:bg-brand-dark cursor-pointer"
+          >
+            Buy Now
+          </Link>
         </div>
       )}
     </nav>

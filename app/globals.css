@@ -147,6 +147,53 @@
   .hero-title {
     @apply text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.06] text-neutral-900 text-balance;
   }
+
+  /* ── Hero wave ─────────────────────────────────────────────────────
+     The old clip-path polygon produced straight, jagged segments that
+     distorted at every viewport width. This version masks the yellow
+     block with an inline SVG curve. Because the SVG is set to
+     preserveAspectRatio="none" and mask-size is 100% 100%, the curve
+     stretches fluidly to ANY width and stays perfectly smooth —
+     the `S` path commands mirror control points, so no kinks are
+     possible at the curve joins. */
+  .hero-wave::before {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: clamp(20rem, 70vh, 44rem);
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 0.22) 55%, rgb(255 255 255 / 0.45) 100%),
+      var(--color-brand);
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 800' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V464C1200 470 960 560 720 610S240 730 0 656Z' fill='%23000'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 800' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V464C1200 470 960 560 720 610S240 730 0 656Z' fill='%23000'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    z-index: 0;
+  }
+
+  /* Second wave layer: same curve family, offset lower and translucent.
+     Sits behind the fade, gives the edge depth so it reads as designed,
+     not clipped. */
+  .hero-wave::after {
+    content: '';
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: clamp(20rem, 70vh, 44rem);
+    background:
+      linear-gradient(180deg, rgb(255 255 255 / 0) 0%, rgb(255 255 255 / 0.5) 62%, rgb(255 255 255 / 0.85) 100%),
+      var(--color-brand);
+    opacity: 0.45;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 800' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V520C1180 540 940 630 700 668S220 780 0 710Z' fill='%23000'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 800' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V520C1180 540 940 630 700 668S220 780 0 710Z' fill='%23000'/%3E%3C/svg%3E");
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    z-index: 0;
+  }
+
   .section-title {
     @apply text-3xl md:text-4xl font-semibold tracking-tight text-neutral-900 text-balance;
   }
@@ -158,5 +205,53 @@
   }
   .card {
     @apply rounded-2xl border border-neutral-200 bg-white transition-all duration-200;
+  }
+
+  /* ── Marker highlight ──────────────────────────────────────────────
+     Yellow can't carry text on white, but it's perfect as a swipe of
+     highlighter BEHIND dark text. Wrap one headline word:
+     <span class="marker-highlight">privacy</span> */
+  .marker-highlight {
+    position: relative;
+    white-space: nowrap;
+    z-index: 0;
+  }
+  .marker-highlight::before {
+    content: '';
+    position: absolute;
+    inset: 0.16em -0.14em -0.04em -0.14em;
+    background: var(--color-brand);
+    opacity: 0.55;
+    border-radius: 0.25em;
+    transform: skew(-6deg) rotate(-1deg);
+    z-index: -1;
+  }
+
+  /* ── Floating card animation ───────────────────────────────────────
+     One gentle motion moment for the hero notification card. */
+  .hero-float {
+    animation: hero-float 5s ease-in-out infinite;
+  }
+  @keyframes hero-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-8px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hero-float {
+      animation: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+
+  /* For inline SVGs that should fill with the brand color */
+  .fill-brand {
+    fill: var(--color-brand);
   }
 }
