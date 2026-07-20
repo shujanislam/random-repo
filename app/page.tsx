@@ -107,18 +107,18 @@ export default function Home() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="hero-wave relative min-h-screen overflow-hidden flex flex-col justify-center px-6 pt-32 pb-16"
+        className="hero-bg relative min-h-screen overflow-hidden flex flex-col justify-center px-4 sm:px-6 pt-28 sm:pt-32 pb-14 sm:pb-16"
       >
-        <div className="relative z-10 max-w-6xl mx-auto w-full grid lg:grid-cols-2 gap-16 items-center">
+        <div className="relative z-10 max-w-6xl mx-auto w-full">
           {/* Left panel - Hero text */}
-          <div className="space-y-8">
+          <div className="hero-copy max-w-xl space-y-6 sm:space-y-8">
             <span className="eyebrow">Privacy-first vehicle identification</span>
 
             <h1 className="hero-title">
               Where privacy meets connection.
             </h1>
 
-            <p className="text-lg md:text-xl text-neutral-600 max-w-xl leading-relaxed">
+            <p className="hero-lede text-base sm:text-lg md:text-xl text-white md:text-neutral-600 max-w-xl leading-relaxed">
               Secure vehicle identification without exposing personal phone
               numbers. Reach owners instantly through privacy-first smart QR
               stickers.
@@ -131,35 +131,22 @@ export default function Home() {
               <button className="btn-secondary">Contact Us</button>
             </div>
 
-            <div className="pt-10 grid grid-cols-3 gap-8 border-t border-neutral-200">
-              <div className="pt-8">
-                <div className="text-3xl font-semibold tracking-tight">100%</div>
-                <p className="text-sm text-neutral-500 mt-1">Privacy protected</p>
+            <div className="hero-stats pt-6 sm:pt-10 grid grid-cols-3 gap-4 sm:gap-8 border-t border-white/20 md:border-neutral-200">
+              <div className="pt-5 sm:pt-8">
+                <div className="hero-stat-value text-2xl sm:text-3xl font-semibold tracking-tight">100%</div>
+                <p className="hero-stat-label text-xs sm:text-sm text-zinc-300 md:text-neutral-500 mt-1">Privacy protected</p>
               </div>
-              <div className="pt-8">
-                <div className="text-3xl font-semibold tracking-tight">Instant</div>
-                <p className="text-sm text-neutral-500 mt-1">Secure contact</p>
+              <div className="pt-5 sm:pt-8">
+                <div className="hero-stat-value text-2xl sm:text-3xl font-semibold tracking-tight">Instant</div>
+                <p className="hero-stat-label text-xs sm:text-sm text-zinc-300 md:text-neutral-500 mt-1">Secure contact</p>
               </div>
-              <div className="pt-8">
-                <div className="text-3xl font-semibold tracking-tight">India</div>
-                <p className="text-sm text-neutral-500 mt-1">Launch ready</p>
+              <div className="pt-5 sm:pt-8">
+                <div className="hero-stat-value text-2xl sm:text-3xl font-semibold tracking-tight">India</div>
+                <p className="hero-stat-label text-xs sm:text-sm text-zinc-300 md:text-neutral-500 mt-1">Launch ready</p>
               </div>
             </div>
           </div>
 
-          {/* Right panel - Visual */}
-          <div className="relative">
-            <div className="aspect-square w-full max-w-lg mx-auto rounded-3xl overflow-hidden">
-              <Image
-                src="/hero-image.png"
-                alt="TruTag smart QR sticker"
-                width={560}
-                height={560}
-                className="w-full h-full object-cover"
-                priority
-              />
-            </div>
-          </div>
         </div>
       </section>
 
@@ -478,7 +465,13 @@ export default function Home() {
             {/* Brand */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <QrCode className="w-5 h-5 text-brand" />
+                <Image
+                  src="/trutag-logo-bgless.png"
+                  alt=""
+                  width={695}
+                  height={830}
+                  className="h-6 w-auto object-contain"
+                />
                 <span className="text-base font-semibold tracking-tight">TruTag</span>
               </div>
               <p className="text-neutral-500 text-sm leading-relaxed max-w-xs">

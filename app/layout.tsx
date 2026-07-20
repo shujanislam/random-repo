@@ -20,23 +20,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'en_US',
   },
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
-  },
+  // Icons are wired up by the app/ file conventions: favicon.ico, icon.png
+  // and apple-icon.png. The PWA/Android set comes from app/manifest.ts.
 }
 
 export const viewport: Viewport = {

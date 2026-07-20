@@ -20,7 +20,7 @@ export default function TeamCard({ member }: { member: TeamMember }) {
         />
         <div>
           <h3 className="font-semibold leading-tight">{member.name}</h3>
-          <p className="text-sm text-brand">{member.designation}</p>
+          <p className="text-sm text-neutral-900">{member.designation}</p>
         </div>
       </div>
       <p className="text-neutral-600 text-sm leading-relaxed">

@@ -2,8 +2,9 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { Menu, X, QrCode } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 type Section = { id: string; label: string };
 
@@ -72,13 +73,21 @@ export default function Navbar() {
       {/* Logo */}
       <Link
         href="/"
-        className="bg-brand hover:bg-brand-dark rounded-full w-12 h-12 flex items-center justify-center pointer-events-auto transition-colors cursor-pointer"
+        aria-label="TruTag home"
+        className="bg-white hover:bg-neutral-50 rounded-full w-12 h-12 flex items-center justify-center border border-neutral-200 shadow-sm pointer-events-auto transition-colors cursor-pointer"
       >
-        <QrCode className="w-6 h-6 text-neutral-900" />
+        <Image
+          src="/trutag-logo-bgless.png"
+          alt="TruTag"
+          width={695}
+          height={830}
+          className="h-7 w-auto object-contain"
+          priority
+        />
       </Link>
 
       {/* Navigation Pill - Desktop */}
-      <div className="hidden md:flex items-center bg-white/80 backdrop-blur-md rounded-full px-1.5 py-1.5 border border-neutral-200 shadow-sm pointer-events-auto gap-0.5">
+      <div className="hidden md:flex items-center bg-white rounded-full px-1.5 py-1.5 border border-neutral-200 shadow-sm pointer-events-auto gap-0.5">
         {sections.map((section) => (
           <Link
             key={section.id}
@@ -110,7 +119,7 @@ export default function Navbar() {
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
         aria-label="Toggle navigation menu"
         aria-expanded={mobileMenuOpen}
-        className="md:hidden bg-white/80 backdrop-blur-md rounded-full w-11 h-11 flex items-center justify-center pointer-events-auto border border-neutral-200 shadow-sm cursor-pointer"
+        className="md:hidden bg-white rounded-full w-11 h-11 flex items-center justify-center pointer-events-auto border border-neutral-200 shadow-sm cursor-pointer"
       >
         {mobileMenuOpen ? (
           <X className="w-5 h-5 text-neutral-900" />
@@ -121,7 +130,7 @@ export default function Navbar() {
 
       {/* Mobile Menu - full width */}
       {mobileMenuOpen && (
-        <div className="absolute top-16 left-0 right-0 bg-white/95 backdrop-blur-md rounded-2xl border border-neutral-200 shadow-lg p-2 md:hidden pointer-events-auto flex flex-col">
+        <div className="absolute top-16 left-0 right-0 bg-white rounded-2xl border border-neutral-200 shadow-lg p-2 md:hidden pointer-events-auto flex flex-col">
           {sections.map((section) => (
             <Link
               key={section.id}
