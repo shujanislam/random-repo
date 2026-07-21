@@ -1,141 +1,118 @@
-import Link from 'next/link';
-import { ArrowLeft } from 'lucide-react';
-import Navbar from '@/components/Navbar';
+import type { Metadata } from 'next'
 
-export default function Privacy() {
+import {
+  LegalCallout,
+  LegalList,
+  LegalPage,
+  LegalSection,
+} from '@/components/legal/legal-page'
+import { contact, site } from '@/lib/site'
+
+export const metadata: Metadata = {
+  title: 'Privacy policy',
+  description: `How ${site.name} collects, uses and protects your personal data.`,
+  alternates: { canonical: '/privacy' },
+}
+
+export default function PrivacyPolicyPage() {
   return (
-    <div className="bg-white text-neutral-900 min-h-screen">
-      <Navbar />
-      <div className="max-w-4xl mx-auto px-6 pt-28 pb-20">
-        {/* Back Button */}
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-neutral-600 hover:text-neutral-900 transition-colors mb-8 cursor-pointer"
-        >
-          <ArrowLeft className="w-5 h-5" />
-          Back to Home
-        </Link>
+    <LegalPage
+      title="Privacy policy"
+      updated="January 2026"
+      intro={`How ${site.name} collects, uses and protects personal data, and the choices you have over it.`}
+    >
+      <LegalSection n={1} title="Introduction">
+        <p>
+          {site.name} (&ldquo;we&rdquo;, &ldquo;our&rdquo;, or &ldquo;us&rdquo;) operates the{' '}
+          {site.name} website and service. This page tells you what personal data we
+          collect, why we collect it, and what you can do about it.
+        </p>
+      </LegalSection>
 
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl md:text-5xl font-semibold tracking-tight mb-4">
-            Privacy Policy
-          </h1>
-          <p className="text-neutral-600">
-            Last updated: January 2026
-          </p>
-        </div>
+      <LegalSection n={2} title="Information we collect">
+        <p>
+          We collect a small number of categories of information, each for a stated
+          purpose. Personal data we may ask you for includes:
+        </p>
+        <LegalList items={['Email address', 'Vehicle registration details', 'Usage data']} />
+      </LegalSection>
 
-        {/* Content */}
-        <div className="prose max-w-none space-y-8">
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">1. Introduction</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              TruTag (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) operates the TruTag website. This page informs you of our policies regarding the collection, use, and disclosure of personal data when you use our service and the choices you have associated with that data.
-            </p>
-          </section>
+      <LegalSection n={3} title="How we use data">
+        <LegalList
+          items={[
+            'To provide and maintain the service',
+            'To notify you about changes to the service',
+            'To let you use interactive features of the service',
+            'To provide customer support',
+            'To analyse usage so that we can improve the service',
+            'To detect, prevent and address technical issues',
+          ]}
+        />
+      </LegalSection>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">2. Information Collection and Use</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              We collect several different types of information for various purposes to provide and improve our service to you.
-            </p>
-            <div className="space-y-3">
-              <div>
-                <h3 className="text-lg font-semibold text-neutral-500 mb-2">Personal Data</h3>
-                <p className="text-neutral-600">
-                  While using our service, we may ask you to provide us with certain personally identifiable information that can be used to contact or identify you (&quot;Personal Data&quot;), including but not limited to:
-                </p>
-                <ul className="list-disc list-inside space-y-1 text-neutral-600 mt-2">
-                  <li>Email address</li>
-                  <li>Vehicle registration details</li>
-                  <li>Usage data</li>
-                </ul>
-              </div>
-            </div>
-          </section>
+      <LegalSection n={4} title="Security of data">
+        <p>
+          The security of your data matters to us, but no method of transmission over
+          the internet or of electronic storage is completely secure. While we use
+          commercially acceptable means and industry-standard encryption to protect
+          your personal data, we cannot guarantee its absolute security.
+        </p>
+      </LegalSection>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">3. Use of Data</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              TruTag uses the collected data for various purposes:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-neutral-600">
-              <li>To provide and maintain our service</li>
-              <li>To notify you about changes to our service</li>
-              <li>To allow you to participate in interactive features of our service</li>
-              <li>To provide customer support</li>
-              <li>To gather analysis or valuable information so that we can improve our service</li>
-              <li>To monitor the usage of our service</li>
-              <li>To detect, prevent and address technical issues</li>
-            </ul>
-          </section>
+      <LegalSection n={5} title="Privacy of phone numbers">
+        <p>
+          Keeping your phone number private is the point of the product. Your number is
+          never shared with anyone who scans your QR sticker. Calls and messages are
+          relayed through our platform so that your number is never displayed.
+        </p>
+      </LegalSection>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">4. Security of Data</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              The security of your data is important to us but remember that no method of transmission over the Internet or method of electronic storage is 100% secure. While we strive to use commercially acceptable means to protect your Personal Data, we cannot guarantee its absolute security. We use industry-standard encryption protocols to protect all sensitive information.
-            </p>
-          </section>
+      <LegalSection n={6} title="Service providers">
+        <p>
+          We may engage third-party companies and individuals to facilitate the
+          service, perform service-related tasks, or help us analyse how the service is
+          used. These parties can access your personal data only to perform those tasks
+          on our behalf, and are obliged not to disclose or use it for anything else.
+        </p>
+      </LegalSection>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">5. Privacy of Phone Numbers</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              TruTag&apos;s core mission is to protect your privacy. Your personal phone number is never shared with anyone who scans your QR sticker. All communication goes through our secure messaging platform, ensuring your phone number remains completely private.
-            </p>
-          </section>
+      <LegalSection n={7} title="Your rights">
+        <LegalList
+          items={[
+            'Access the personal data we hold about you',
+            'Correct data that is inaccurate',
+            'Request deletion of your data',
+            'Opt out of non-essential communications',
+            'Withdraw consent at any time',
+          ]}
+        />
+      </LegalSection>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">6. Service Providers</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              We may employ third-party companies and individuals to facilitate our service (&quot;Service Providers&quot;), provide the service on our behalf, perform service-related services or assist us in analyzing how our service is used. These third parties have access to your Personal Data only to perform these tasks on our behalf and are obligated not to disclose or use it for any other purpose.
-            </p>
-          </section>
+      <LegalSection n={8} title="Changes to this policy">
+        <p>
+          We may update this privacy policy from time to time. Changes are posted on
+          this page along with a revised &ldquo;last updated&rdquo; date.
+        </p>
+      </LegalSection>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">7. Changes to This Privacy Policy</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page and updating the &quot;effective date&quot; at the top of this Privacy Policy.
-            </p>
-          </section>
+      <LegalSection n={9} title="Contact us">
+        <p>Questions about this policy can go straight to us:</p>
+        <p>
+          <a
+            href={`mailto:${contact.email}`}
+            className="font-medium text-brand-600 underline underline-offset-4 hover:text-brand-700"
+          >
+            {contact.email}
+          </a>
+          {' · '}
+          {site.url.replace('https://', '')}
+        </p>
+      </LegalSection>
 
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">8. Contact Us</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              If you have any questions about this Privacy Policy, please contact us:
-            </p>
-            <div className="bg-neutral-50 border border-neutral-200 rounded-lg p-6 space-y-2">
-              <p className="text-neutral-700">
-                <span className="text-neutral-500 font-semibold">Email:</span> privacy@trutag.com
-              </p>
-              <p className="text-neutral-700">
-                <span className="text-neutral-500 font-semibold">Website:</span> www.trutag.com
-              </p>
-            </div>
-          </section>
-
-          <section className="space-y-4">
-            <h2 className="text-2xl font-bold text-neutral-900">9. Your Rights</h2>
-            <p className="text-neutral-600 leading-relaxed">
-              You have the right to:
-            </p>
-            <ul className="list-disc list-inside space-y-2 text-neutral-600">
-              <li>Access your personal data</li>
-              <li>Correct inaccurate data</li>
-              <li>Request deletion of your data</li>
-              <li>Opt-out of certain communications</li>
-              <li>Withdraw consent at any time</li>
-            </ul>
-          </section>
-
-          <section className="space-y-4 bg-neutral-50 border border-neutral-200 rounded-lg p-6">
-            <h2 className="text-lg font-bold text-neutral-500">Privacy First Promise</h2>
-            <p className="text-neutral-700">
-              TruTag is committed to protecting your privacy. We will never sell your data, and we will never compromise your personal information. Your trust is our most valuable asset.
-            </p>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
+      <LegalCallout title="Our privacy-first promise">
+        We will never sell your data, and we will never expose your personal phone
+        number to the people who scan your tag. Your trust is the product.
+      </LegalCallout>
+    </LegalPage>
+  )
 }

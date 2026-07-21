@@ -1,6 +1,12 @@
 import { Analytics } from '@vercel/analytics/next'
 import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
+import type { ReactNode } from 'react'
+
+import { SiteFooter } from '@/components/layout/site-footer'
+import { SiteHeader } from '@/components/layout/site-header'
+import { SkipLink } from '@/components/layout/skip-link'
+import { contact, site } from '@/lib/site'
 import './globals.css'
 
 const inter = Inter({
@@ -10,18 +16,36 @@ const inter = Inter({
 })
 
 export const metadata: Metadata = {
-  title: 'TruTag - Privacy-First Vehicle QR Sticker',
-  description: 'TruTag is a privacy-focused smart QR sticker for vehicles. Contact vehicle owners securely without sharing personal phone numbers. Perfect for parking, emergencies, and accidents.',
-  keywords: 'vehicle QR sticker, privacy, smart sticker, vehicle contact, QR code, safety, India',
-  generator: 'v0.app',
-  openGraph: {
-    title: 'TruTag - Privacy Meets Connection',
-    description: 'Secure vehicle identification and communication without compromising privacy.',
-    type: 'website',
-    locale: 'en_US',
+  // metadataBase makes every relative OG/canonical URL below resolve to an
+  // absolute one — without it, link previews silently ship broken image URLs.
+  metadataBase: new URL(site.url),
+  title: {
+    default: `${site.name} — privacy-first vehicle QR sticker`,
+    template: `%s · ${site.name}`,
   },
-  // Icons are wired up by the app/ file conventions: favicon.ico, icon.png
-  // and apple-icon.png. The PWA/Android set comes from app/manifest.ts.
+  description: site.description,
+  applicationName: site.name,
+  alternates: { canonical: '/' },
+  openGraph: {
+    type: 'website',
+    siteName: site.name,
+    locale: site.locale,
+    url: '/',
+    title: `${site.name} — be reachable, stay private`,
+    description: site.description,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: `${site.name} — be reachable, stay private`,
+    description: site.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, 'max-image-preview': 'large' },
+  },
+  // Icons come from the app/ file conventions (favicon.ico, icon.png,
+  // apple-icon.png); the PWA set comes from app/manifest.ts.
 }
 
 export const viewport: Viewport = {
@@ -29,23 +53,30 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
   width: 'device-width',
   initialScale: 1,
-  userScalable: true,
 }
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: site.name,
+  url: site.url,
+  description: site.description,
+  email: contact.email,
+  address: { '@type': 'PostalAddress', addressLocality: contact.city, addressCountry: 'IN' },
+}
+
+export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} bg-white scroll-smooth`}>
-      <head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="theme-color" content="#ffffff" />
-      </head>
-      <body className="font-sans antialiased bg-white text-neutral-900 selection:bg-neutral-900 selection:text-white">
-        {children}
+    <html lang="en-IN" className={inter.variable}>
+      <body className="bg-white font-sans text-neutral-900 selection:bg-brand-500 selection:text-white">
+        <SkipLink />
+        <SiteHeader />
+        <main id="main">{children}</main>
+        <SiteFooter />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>
     </html>

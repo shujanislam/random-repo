@@ -1,58 +1,83 @@
-import { Button as ButtonPrimitive } from '@base-ui/react/button'
+import Link from 'next/link'
 import { cva, type VariantProps } from 'class-variance-authority'
+import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 
 import { cn } from '@/lib/utils'
 
-const buttonVariants = cva(
-  "group/button inline-flex shrink-0 cursor-pointer items-center justify-center rounded-lg border border-transparent bg-clip-padding text-sm font-medium whitespace-nowrap transition-all outline-none select-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-3 aria-invalid:ring-destructive/20 dark:aria-invalid:border-destructive/50 dark:aria-invalid:ring-destructive/40 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+const button = cva(
+  "inline-flex shrink-0 items-center justify-center gap-2 rounded-full font-medium whitespace-nowrap transition-[background-color,border-color,color,box-shadow,transform] duration-200 active:translate-y-px disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground [a]:hover:bg-primary/80',
-        outline:
-          'border-border bg-background hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:border-input dark:bg-input/30 dark:hover:bg-input/50',
+        /* Brand blue carries the primary action — 5.3:1 against white text. */
+        primary: 'bg-brand-500 text-white shadow-sm shadow-brand-900/20 hover:bg-brand-600',
         secondary:
-          'bg-secondary text-secondary-foreground hover:bg-secondary/80 aria-expanded:bg-secondary aria-expanded:text-secondary-foreground',
-        ghost:
-          'hover:bg-muted hover:text-foreground aria-expanded:bg-muted aria-expanded:text-foreground dark:hover:bg-muted/50',
-        destructive:
-          'bg-destructive/10 text-destructive hover:bg-destructive/20 focus-visible:border-destructive/40 focus-visible:ring-destructive/20 dark:bg-destructive/20 dark:hover:bg-destructive/30 dark:focus-visible:ring-destructive/40',
-        link: 'text-primary underline-offset-4 hover:underline',
+          'border border-neutral-300 bg-white text-neutral-900 hover:border-neutral-400 hover:bg-neutral-50',
+        /* For dark surfaces, where the gold accent finally gets to shine. */
+        accent: 'bg-accent text-neutral-950 hover:bg-accent/85',
+        onDark:
+          'border border-white/25 bg-white/10 text-white backdrop-blur-md hover:border-white/50 hover:bg-white/20',
+        ghost: 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-900',
       },
       size: {
-        default:
-          'h-8 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
-        xs: "h-6 gap-1 rounded-[min(var(--radius-md),10px)] px-2 text-xs in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3",
-        sm: "h-7 gap-1 rounded-[min(var(--radius-md),12px)] px-2.5 text-[0.8rem] in-data-[slot=button-group]:rounded-lg has-data-[icon=inline-end]:pr-1.5 has-data-[icon=inline-start]:pl-1.5 [&_svg:not([class*='size-'])]:size-3.5",
-        lg: 'h-9 gap-1.5 px-2.5 has-data-[icon=inline-end]:pr-2 has-data-[icon=inline-start]:pl-2',
-        icon: 'size-8',
-        'icon-xs':
-          "size-6 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-lg [&_svg:not([class*='size-'])]:size-3",
-        'icon-sm':
-          'size-7 rounded-[min(var(--radius-md),12px)] in-data-[slot=button-group]:rounded-lg',
-        'icon-lg': 'size-9',
+        sm: 'px-4 py-2 text-sm',
+        md: 'px-5 py-2.5 text-sm',
+        lg: 'px-6 py-3 text-[0.9375rem]',
       },
+      block: { true: 'w-full', false: '' },
     },
-    defaultVariants: {
-      variant: 'default',
-      size: 'default',
-    },
+    defaultVariants: { variant: 'primary', size: 'lg', block: false },
   },
 )
 
-function Button({
-  className,
-  variant = 'default',
-  size = 'default',
-  ...props
-}: ButtonPrimitive.Props & VariantProps<typeof buttonVariants>) {
+type Variants = VariantProps<typeof button>
+
+type AsButton = { href?: undefined } & ButtonHTMLAttributes<HTMLButtonElement>
+type AsLink = { href: string } & Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'href'>
+
+export type ButtonProps = Variants & { className?: string; children: ReactNode } & (
+    | AsButton
+    | AsLink
+  )
+
+/**
+ * One button, three renderings: a `<button>`, a client-routed `<Link>` for
+ * in-app hrefs, or a plain `<a>` for mail/tel/external — chosen from the
+ * shape of the props, so callers never have to think about it.
+ */
+export function Button({ className, variant, size, block, children, ...props }: ButtonProps) {
+  const classes = cn(button({ variant, size, block }), className)
+
+  if (props.href === undefined) {
+    const { type = 'button', ...rest } = props as AsButton
+    return (
+      <button type={type} className={classes} {...rest}>
+        {children}
+      </button>
+    )
+  }
+
+  const { href, ...rest } = props as AsLink
+
+  if (href.startsWith('/') || href.startsWith('#')) {
+    return (
+      <Link href={href} className={classes} {...rest}>
+        {children}
+      </Link>
+    )
+  }
+
+  const isExternalHttp = href.startsWith('http')
   return (
-    <ButtonPrimitive
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
-      {...props}
-    />
+    <a
+      href={href}
+      className={classes}
+      {...(isExternalHttp ? { target: '_blank', rel: 'noopener noreferrer' } : null)}
+      {...rest}
+    >
+      {children}
+    </a>
   )
 }
 
-export { Button, buttonVariants }
+export { button as buttonVariants }

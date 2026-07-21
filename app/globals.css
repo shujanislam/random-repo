@@ -1,292 +1,136 @@
 @import 'tailwindcss';
-@import 'tw-animate-css';
-@import 'shadcn/tailwind.css';
 
-@custom-variant dark (&:is(.dark *));
+/* ─────────────────────────────────────────────────────────────────────────
+   TruTag design tokens
 
-@theme inline {
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --color-foreground: var(--foreground);
-  --color-background: var(--background);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
-}
+   The palette is taken from the real product, not invented:
+   • Brand blue  — sampled from the TruTag mark and the app UI (#0060f0 → #00246c)
+   • Accent gold — sampled from the physical sticker (#fccc0c)
 
-:root {
-  color-scheme: light;
-  --background: #ffffff;
-  --foreground: #0f172a;
-  --card: #ffffff;
-  --card-foreground: #0f172a;
-  --popover: #ffffff;
-  --popover-foreground: #0f172a;
-  --primary: #2563eb;
-  --primary-foreground: #ffffff;
-  --secondary: #06b6d4;
-  --secondary-foreground: #0f172a;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --accent: #06b6d4;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --border: #e2e8f0;
-  --input: #e2e8f0;
-  --ring: #2563eb;
-  --chart-1: #2563eb;
-  --chart-2: #06b6d4;
-  --chart-3: #ef4444;
-  --chart-4: #f59e0b;
-  --chart-5: #8b5cf6;
-  --radius: 0.625rem;
-  --sidebar: #ffffff;
-  --sidebar-foreground: #0f172a;
-  --sidebar-primary: #2563eb;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #06b6d4;
-  --sidebar-accent-foreground: #0f172a;
-  --sidebar-border: #e2e8f0;
-  --sidebar-ring: #2563eb;
-}
+   Blue carries actions and identity because it reads at 5.3:1 on white.
+   Gold is a *fill-only* accent: it can never carry text on white (~1.4:1),
+   so it appears as a highlight swipe, a badge fill, or on dark surfaces —
+   always paired with near-black or used behind text, never as text.
+   `--color-accent-ink` is the darkened gold for the rare case where the
+   accent must be a glyph on white (6.2:1).
+   ───────────────────────────────────────────────────────────────────────── */
 
-.dark {
-  color-scheme: dark;
-  --background: #0f172a;
-  --foreground: #ffffff;
-  --card: #1e293b;
-  --card-foreground: #ffffff;
-  --popover: #1e293b;
-  --popover-foreground: #ffffff;
-  --primary: #2563eb;
-  --primary-foreground: #ffffff;
-  --secondary: #06b6d4;
-  --secondary-foreground: #0f172a;
-  --muted: #475569;
-  --muted-foreground: #cbd5e1;
-  --accent: #06b6d4;
-  --accent-foreground: #0f172a;
-  --destructive: #ef4444;
-  --border: #334155;
-  --input: #1e293b;
-  --ring: #2563eb;
-  --chart-1: #2563eb;
-  --chart-2: #06b6d4;
-  --chart-3: #ef4444;
-  --chart-4: #f59e0b;
-  --chart-5: #8b5cf6;
-  --sidebar: #1e293b;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #2563eb;
-  --sidebar-primary-foreground: #ffffff;
-  --sidebar-accent: #06b6d4;
-  --sidebar-accent-foreground: #0f172a;
-  --sidebar-border: #334155;
-  --sidebar-ring: #2563eb;
-}
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, sans-serif;
 
-@theme inline {
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --color-brand: #e5de00;
-  --color-brand-dark: #c99f00;
-  --color-brand-soft: #fbf3d0;
+  --color-brand-50: #eef4ff;
+  --color-brand-100: #dbe6ff;
+  --color-brand-200: #bdd2ff;
+  --color-brand-300: #90b4ff;
+  --color-brand-400: #5a8bff;
+  --color-brand-500: #0060f0;
+  --color-brand-600: #0048b4;
+  --color-brand-700: #003c9c;
+  --color-brand-800: #00317f;
+  --color-brand-900: #00246c;
+  --color-brand-950: #001845;
+
+  --color-accent: #fccc0c;
+  --color-accent-soft: #fff6d6;
+  --color-accent-ink: #7a5c00;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-white text-neutral-900;
-    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-  }
   html {
     scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white text-neutral-900 antialiased;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+  }
+
+  /* One consistent, brand-coloured focus ring everywhere. Only for keyboard
+     users — pointer interaction keeps the UI quiet. */
+  :where(a, button, summary, input, textarea, select, [tabindex]):focus-visible {
+    outline: 2px solid var(--color-brand-500);
+    outline-offset: 3px;
+    border-radius: 0.25rem;
+  }
+
+  /* Anchored sections must clear the floating header, otherwise every
+     in-page link parks its own heading underneath the nav. */
+  :where([id]) {
+    scroll-margin-top: 7rem;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
 }
 
 @layer components {
-  .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-medium uppercase tracking-[0.18em] text-neutral-500;
-  }
-  .eyebrow::before {
-    content: '';
-    @apply h-1.5 w-1.5 rounded-full bg-brand;
-  }
-  .hero-title {
-    @apply text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.06] text-neutral-900 text-balance;
-  }
-
-  .hero-bg {
-    background-image: url('/hero-bg.jpeg');
-    background-position: center right;
-    background-size: cover;
-  }
-  .hero-bg::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background:
-      linear-gradient(90deg, #ffffff 0%, rgb(255 255 255 / 0.61) 28%, rgb(255 255 255 / 0.35) 52%, rgb(255 255 255 / 0.05) 78%),
-      linear-gradient(180deg, rgb(255 255 255 / 0) 60%, #ffffff 100%);
-    z-index: 0;
-  }
-  .hero-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, #ffffff 0%, rgb(255 255 255 / 0.51) 18%, rgb(255 255 255 / 0) 45%);
-    z-index: 0;
-  }
-
-  /* Tablet: the subject sits right of centre, so ease the crop inward
-     and strengthen the scrim now that the copy spans more of the width. */
-  @media (max-width: 1023px) {
-    .hero-bg {
-      background-position: 72% center;
+  /* ── Scroll reveal ───────────────────────────────────────────────────
+     The hidden state is gated behind `scripting: enabled` so that a
+     no-JS client (or a crawler that never runs the observer) still sees
+     fully-rendered content instead of a blank page. */
+  @media (scripting: enabled) {
+    .reveal {
+      opacity: 0;
+      transform: translateY(1.25rem);
+      transition:
+        opacity 0.7s var(--ease-out-expo),
+        transform 0.7s var(--ease-out-expo);
+      transition-delay: var(--reveal-delay, 0ms);
+      will-change: opacity, transform;
     }
-    .hero-bg::after {
-      background: linear-gradient(90deg, #ffffff 0%, rgb(255 255 255 / 0.68) 34%, rgb(255 255 255 / 0) 72%);
+    .reveal[data-visible='true'] {
+      opacity: 1;
+      transform: none;
+      will-change: auto;
     }
   }
 
-  /* Mobile: the photo is the hero. Full-bleed cover, dark scrim rising
-     from the bottom, light copy sitting on it. No white card, no fixed
-     offsets — holds from 320px up at any viewport height. */
-  @media (max-width: 767px) {
-    .hero-bg {
-      background-position: 62% center;
-      background-size: cover;
-      justify-content: flex-end;
-    }
-    .hero-bg::before {
-      background: linear-gradient(
-        180deg,
-        rgb(9 9 11 / 0.34) 0%,
-        rgb(9 9 11 / 0.16) 26%,
-        rgb(9 9 11 / 0.72) 62%,
-        rgb(9 9 11 / 0.94) 100%
-      );
-    }
-    .hero-bg::after {
-      background: radial-gradient(circle at 74% 24%, rgb(229 222 0 / 0.22) 0%, rgb(229 222 0 / 0) 52%);
-    }
-
-    .hero-copy .hero-title {
-      color: #ffffff;
-    }
-    .hero-copy .eyebrow {
-      color: rgb(228 228 231);
-    }
-    /* Note: the lede, stat labels and stat divider are inverted via `md:`
-       variants in the markup, not here — a plain `text-neutral-600` utility
-       lives in Tailwind's `utilities` layer and would beat any rule in this
-       `components` layer regardless of specificity. */
-    .hero-stat-value {
-      color: #ffffff;
-    }
-    /* Secondary CTA goes glass so the brand-yellow primary stays dominant. */
-    .hero-copy .btn-secondary {
-      border-color: rgb(255 255 255 / 0.45);
-      background: rgb(255 255 255 / 0.1);
-      color: #ffffff;
-      backdrop-filter: blur(8px);
-    }
-    .hero-copy .btn-secondary:hover {
-      border-color: rgb(255 255 255 / 0.7);
-      background: rgb(255 255 255 / 0.18);
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 
-  .section-title {
-    @apply text-3xl md:text-4xl font-semibold tracking-tight text-neutral-900 text-balance;
-  }
-  .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-brand px-6 py-3 text-sm font-medium text-neutral-900 transition-colors duration-200 hover:bg-brand-dark cursor-pointer;
-  }
-  .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-neutral-300 bg-white px-6 py-3 text-sm font-medium text-neutral-900 transition-colors duration-200 hover:border-neutral-400 hover:bg-neutral-50 cursor-pointer;
-  }
-  .card {
-    @apply rounded-2xl border border-neutral-200 bg-white transition-all duration-200;
-  }
-
-  /* ── Marker highlight ──────────────────────────────────────────────
-     Yellow can't carry text on white, but it's perfect as a swipe of
-     highlighter BEHIND dark text. Wrap one headline word:
-     <span class="marker-highlight">privacy</span> */
-  .marker-highlight {
+  /* ── Marker highlight ────────────────────────────────────────────────
+     Gold cannot carry text, but it is perfect as a swipe of highlighter
+     *behind* dark text. This is the accent's primary job on the page. */
+  .marker {
     position: relative;
     white-space: nowrap;
     z-index: 0;
   }
-  .marker-highlight::before {
+  .marker::before {
     content: '';
     position: absolute;
-    inset: 0.16em -0.14em -0.04em -0.14em;
-    background: var(--color-brand);
-    opacity: 0.55;
-    border-radius: 0.25em;
-    transform: skew(-6deg) rotate(-1deg);
+    inset: 0.2em -0.16em -0.02em -0.16em;
+    background: var(--color-accent);
+    border-radius: 0.2em;
+    transform: skew(-7deg) rotate(-0.6deg);
     z-index: -1;
   }
 
-  /* ── Floating card animation ───────────────────────────────────────
-     One gentle motion moment for the hero notification card. */
-  .hero-float {
-    animation: hero-float 5s ease-in-out infinite;
-  }
-  @keyframes hero-float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-8px);
-    }
-  }
-  @media (prefers-reduced-motion: reduce) {
-    .hero-float {
-      animation: none;
-    }
-    html {
-      scroll-behavior: auto;
-    }
-  }
-
-  /* For inline SVGs that should fill with the brand color */
-  .fill-brand {
-    fill: var(--color-brand);
+  /* Subtle dot grid for dark panels — adds depth without another image. */
+  .dot-grid {
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      rgb(255 255 255 / 0.09) 1px,
+      transparent 0
+    );
+    background-size: 22px 22px;
   }
 }
