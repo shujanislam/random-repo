@@ -1,7 +1,11 @@
 import {
+  BadgeCheck,
   BellRing,
+  Car,
   CloudRain,
   KeyRound,
+  Lock,
+  MessageSquare,
   QrCode,
   ScanLine,
   ShieldCheck,
@@ -31,41 +35,69 @@ export const solutionPoints: SolutionPoint[] = [
 
 /* ── How it works ───────────────────────────────────────────────────── */
 
-export type Step = {
-  n: number
-  title: string
-  body: string
-  image: string
-  alt: string
-  fit: 'cover' | 'contain'
-}
+export type Step = { n: number; icon: LucideIcon; title: string; body: string }
 
 export const steps: Step[] = [
   {
     n: 1,
-    title: 'Order your tag',
-    body: 'Pick a sticker for your car or bike. It arrives ready to activate, pre-printed with a unique code.',
-    image: '/media/sticker.webp',
-    alt: 'A TruTag smart QR sticker, reading “scan to connect”',
-    fit: 'contain',
+    icon: QrCode,
+    title: 'Order your TruTag',
+    body: 'Pick a sticker for your car or bike. It arrives pre-printed with a unique code, ready to activate.',
   },
   {
     n: 2,
-    title: 'Stick it on the glass',
-    body: 'Rear windscreen for cars, rear mudguard for bikes. Takes thirty seconds and survives the monsoon.',
-    image: '/media/car.webp',
-    alt: 'A TruTag sticker applied to the rear windscreen of a car',
-    fit: 'cover',
+    icon: BadgeCheck,
+    title: 'Activate your tag',
+    body: 'Scan the code once and link it to your vehicle in the app. It takes a few taps.',
   },
   {
     n: 3,
-    title: 'Anyone can reach you',
-    body: 'A stranger points their camera at the code. You get the message. They never get your number.',
-    image: '/media/scanning.webp',
-    alt: 'A TruTag sticker on a motorbike being scanned by a phone camera',
-    fit: 'cover',
+    icon: Car,
+    title: 'Stick it on the glass',
+    body: 'Rear windscreen for cars, rear mudguard for bikes. Thirty seconds, and it survives the monsoon.',
+  },
+  {
+    n: 4,
+    icon: BellRing,
+    title: 'Get contacted safely',
+    body: 'Someone scans, you get the alert. They can reach you without ever seeing your number.',
   },
 ]
+
+/* ── What happens after a scan ──────────────────────────────────────── */
+
+export type ScanFlowStep = { icon: LucideIcon; label: string; body: string }
+
+export const scanFlow: ScanFlowStep[] = [
+  {
+    icon: ScanLine,
+    label: 'QR scan',
+    body: 'Someone points a phone camera at your TruTag sticker.',
+  },
+  {
+    icon: ShieldCheck,
+    label: 'Secure page',
+    body: 'They land on a TruTag page showing limited vehicle info.',
+  },
+  {
+    icon: MessageSquare,
+    label: 'Message or call',
+    body: 'They pick a reason, then send a message or request a private call.',
+  },
+  {
+    icon: BellRing,
+    label: 'You are notified',
+    body: 'The alert reaches you instantly in the TruTag app.',
+  },
+  {
+    icon: Lock,
+    label: 'You respond',
+    body: 'Reply or take the call through the relay. Your number stays hidden.',
+  },
+]
+
+/** The three promises repeated under the how-it-works call to action. */
+export const assurances: string[] = ['Easy to activate', 'Relayed and secure', 'Privacy first']
 
 /* ── Features ───────────────────────────────────────────────────────── */
 
@@ -262,32 +294,43 @@ export const faqs: Faq[] = [
 
 /* ── Team ───────────────────────────────────────────────────────────── */
 
-export type TeamMember = { name: string; role: string; note: string }
+/** `photo` is optional — a member without one falls back to a monogram. */
+export type TeamMember = {
+  name: string
+  role: string
+  note: string
+  photo?: string
+}
 
 export const team: TeamMember[] = [
   {
     name: 'I. Islam',
     role: 'Founder & CEO',
     note: "Sets TruTag's direction and owns the product vision.",
+    photo: '/founder/injamamul.jpeg',
   },
   {
     name: 'Nagodip Adhikary',
     role: 'Chief Technology Officer',
     note: 'Builds the relay platform and the systems that keep numbers private.',
+    photo: '/founder/nagodip.jpeg',
   },
   {
     name: 'Mukut Boruah',
     role: 'Chief Growth Officer',
     note: 'Runs partnerships and takes TruTag to new cities.',
+    photo: '/founder/mukut.jpeg',
   },
   {
     name: 'Raju Ahmed',
     role: 'Chief Business Development Officer',
     note: 'Works with dealers, fleets and RWAs on the ground.',
+    photo: '/founder/raju.jpeg',
   },
   {
     name: 'Bornali Medhi',
     role: 'Chief Marketing Officer',
     note: 'Shapes the brand and how TruTag talks about privacy.',
+    photo: '/founder/bornali.jpeg',
   },
 ]

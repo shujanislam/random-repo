@@ -1,84 +1,25 @@
-import { Lock, ShieldCheck } from 'lucide-react'
+import Image from 'next/image'
 
 import { PhoneFrame } from '@/components/ui/phone-frame'
 import { Reveal } from '@/components/ui/reveal'
 import { Section } from '@/components/ui/section'
 import { SectionHeading } from '@/components/ui/section-heading'
-import { scanReasons } from '@/lib/content'
-import { cn } from '@/lib/utils'
 
 /**
  * The most persuasive thing this product has is the screen a *stranger* gets,
- * because that is where the privacy promise is either kept or broken. It is
- * drawn in markup rather than shipped as a screenshot: sharp at any density,
- * no extra bytes, and it stays in sync with the brand tokens.
- *
- * Presented to assistive tech as a single labelled image — it depicts an
- * interface, it is not one.
+ * because that is where the privacy promise is either kept or broken — so it
+ * is the real thing, straight from the scan web app.
  */
 function ScannerScreen() {
   return (
-    <div
-      role="img"
-      aria-label="The screen a person sees after scanning a TruTag sticker: a masked number plate, a list of reasons to pick from such as blocking my car or lights left on, a short message box, a notify owner button, and a note that the owner's phone number is never shown."
-      className="flex h-full w-full flex-col bg-neutral-50 pt-12"
-    >
-      <div className="px-5 pb-4 text-center">
-        <p className="text-[0.6875rem] font-semibold tracking-[0.2em] text-neutral-400 uppercase">
-          TruTag
-        </p>
-      </div>
-
-      <div className="mx-4 rounded-2xl bg-gradient-to-br from-brand-600 to-brand-800 p-4 text-white shadow-lg shadow-brand-900/25">
-        <p className="text-[0.625rem] tracking-[0.14em] text-white/60 uppercase">Vehicle</p>
-        <p className="mt-1 text-xl font-semibold tracking-wide tabular-nums">MH 12 ·· ····</p>
-        <div className="mt-3 inline-flex items-center gap-1.5 rounded-full bg-white/15 px-2.5 py-1 text-[0.6875rem] font-medium">
-          <ShieldCheck className="size-3" />
-          Verified owner
-        </div>
-      </div>
-
-      <div className="mt-5 px-4">
-        <p className="text-[0.8125rem] font-medium text-neutral-900">Why are you reaching out?</p>
-        <div className="mt-2.5 flex flex-wrap gap-1.5">
-          {scanReasons.map((reason, index) => (
-            <span
-              key={reason}
-              className={cn(
-                'rounded-full px-2.5 py-1.5 text-[0.6875rem] font-medium',
-                index === 0
-                  ? 'bg-accent text-neutral-950'
-                  : 'border border-neutral-200 bg-white text-neutral-600',
-              )}
-            >
-              {reason}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      <div className="mt-4 px-4">
-        <div className="rounded-2xl border border-neutral-200 bg-white p-3">
-          <p className="text-[0.625rem] tracking-[0.12em] text-neutral-400 uppercase">
-            Message
-          </p>
-          <p className="mt-1.5 text-[0.75rem] leading-snug text-neutral-700">
-            Hi — you&rsquo;re parked across my gate, could you move when you get
-            a moment?
-          </p>
-        </div>
-      </div>
-
-      <div className="mt-auto px-4 pb-6">
-        <div className="rounded-full bg-brand-500 py-3 text-center text-[0.8125rem] font-semibold text-white shadow-sm">
-          Notify the owner
-        </div>
-        <p className="mt-3 flex items-center justify-center gap-1.5 text-[0.6875rem] text-neutral-500">
-          <Lock className="size-3" />
-          Their number is never shown
-        </p>
-      </div>
-    </div>
+    <Image
+      src="/media/webapp-screenshot.jpeg"
+      alt="The screen a person sees after scanning a TruTag sticker: the registered vehicle plate, then quick alerts to pick from — accident detected, emergency alert, wrong parking, or send a message."
+      width={720}
+      height={1440}
+      sizes="(min-width: 640px) 296px, 252px"
+      className="h-full w-full object-cover"
+    />
   )
 }
 
@@ -121,7 +62,9 @@ export function ScanPreview() {
         </Reveal>
 
         <Reveal delay={100} className="flex justify-center lg:justify-end">
-          <PhoneFrame>
+          {/* Sized to the screenshot's 1:2 screen plus the bezel, so it fills
+              edge to edge with no crop and no letterboxing. */}
+          <PhoneFrame notch={false} className="aspect-[272/524]">
             <ScannerScreen />
           </PhoneFrame>
         </Reveal>

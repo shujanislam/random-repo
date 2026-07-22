@@ -9,9 +9,15 @@ import { cn } from '@/lib/utils'
 export function PhoneFrame({
   children,
   className,
+  notch = true,
 }: {
   children: ReactNode
   className?: string
+  /**
+   * Off when the screen content is a screenshot short enough that the frame
+   * has been sized down to it — the cutout would land on the content.
+   */
+  notch?: boolean
 }) {
   return (
     <div
@@ -29,10 +35,12 @@ export function PhoneFrame({
 
       <div className="relative h-full w-full overflow-hidden rounded-[2.125rem] bg-white sm:rounded-[2.375rem]">
         {children}
-        <span
-          aria-hidden="true"
-          className="absolute left-1/2 top-2.5 h-6 w-20 -translate-x-1/2 rounded-full bg-neutral-900 sm:h-7 sm:w-24"
-        />
+        {notch ? (
+          <span
+            aria-hidden="true"
+            className="absolute left-1/2 top-2.5 h-6 w-20 -translate-x-1/2 rounded-full bg-neutral-900 sm:h-7 sm:w-24"
+          />
+        ) : null}
       </div>
     </div>
   )

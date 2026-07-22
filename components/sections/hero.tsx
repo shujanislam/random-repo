@@ -90,7 +90,7 @@ export function Hero() {
               </span>
               <div className="min-w-0">
                 <p className="text-sm font-medium text-white">Someone scanned your tag</p>
-                <p className="truncate text-xs text-white/60">MH 12 · “You’re blocking my car”</p>
+                <p className="truncate text-xs text-white/60">AS 12 · “You’re blocking my car”</p>
               </div>
             </div>
             <p className="mt-3.5 border-t border-white/10 pt-3 text-xs text-white/50">
