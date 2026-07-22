@@ -1,11 +1,9 @@
-import { Check, ShieldCheck, ShoppingCart } from 'lucide-react'
+import { ShieldCheck } from 'lucide-react'
 
-import { Button } from '@/components/ui/button'
 import { Reveal } from '@/components/ui/reveal'
 import { Section } from '@/components/ui/section'
 import { SectionHeading } from '@/components/ui/section-heading'
-import { assurances, scanFlow, steps } from '@/lib/content'
-import { mailtoOrder } from '@/lib/site'
+import { scanFlow, steps } from '@/lib/content'
 import { cn } from '@/lib/utils'
 
 /**
