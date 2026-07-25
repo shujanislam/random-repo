@@ -310,12 +310,6 @@ export const team: TeamMember[] = [
     photo: '/founder/injamamul.jpeg',
   },
   {
-    name: 'Nagodip Adhikary',
-    role: 'Chief Technology Officer',
-    note: 'Builds the relay platform and the systems that keep numbers private.',
-    photo: '/founder/nagodip.jpeg',
-  },
-  {
     name: 'Mukut Boruah',
     role: 'Chief Growth Officer',
     note: 'Runs partnerships and takes TruTag to new cities.',
@@ -328,9 +322,9 @@ export const team: TeamMember[] = [
     photo: '/founder/raju.jpeg',
   },
   {
-    name: 'Bornali Medhi',
-    role: 'Chief Marketing Officer',
-    note: 'Shapes the brand and how TruTag talks about privacy.',
-    photo: '/founder/bornali.jpeg',
+    name: 'Nagodip Adhikary',
+    role: 'Chief Technology Officer',
+    note: 'Builds the relay platform and the systems that keep numbers private.',
+    photo: '/founder/nagodip.jpeg',
   },
 ]

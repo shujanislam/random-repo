@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useId, useRef, useState } from 'react'
 import { ShieldCheck } from 'lucide-react'
 
 import { Reveal } from '@/components/ui/reveal'
@@ -44,7 +47,151 @@ function Connector({ dotted = false, className }: { dotted?: boolean; className?
   )
 }
 
+/** How the blue overlay is revealed: along the direction the route travels. */
+type Wipe = 'right' | 'left' | 'down'
+
+/** The clip rectangle for each wipe, empty (`false`) and full (`true`). */
+const wipes: Record<Wipe, Record<'true' | 'false', { x: number; y: number; w: number; h: number }>> =
+  {
+    right: { false: { x: -10, y: -20, w: 0, h: 140 }, true: { x: -10, y: -20, w: 130, h: 140 } },
+    left: { false: { x: 110, y: -20, w: 0, h: 140 }, true: { x: -10, y: -20, w: 130, h: 140 } },
+    down: { false: { x: -10, y: -20, w: 120, h: 0 }, true: { x: -10, y: -20, w: 120, h: 140 } },
+  }
+
+/**
+ * One leg of the route. The grey path is always there — it is the road ahead —
+ * and the blue one is wiped in over it, in the direction of travel, when the
+ * step it leads to activates.
+ *
+ * The reveal is a clip rectangle rather than the usual stroke-dash trick:
+ * `preserveAspectRatio="none"` is what lets the leg's endpoints stay pinned to
+ * the card centres at any width, and under that distortion dash lengths stop
+ * matching the path (`pathLength` normalisation and `non-scaling-stroke` pull
+ * in opposite directions). A clip rectangle distorts with the path, so it
+ * stays exact. `vector-effect` keeps the stroke an even 2px regardless.
+ */
+function RouteLeg({ d, drawn, wipe }: { d: string; drawn: boolean; wipe: Wipe }) {
+  const clipId = `route-${useId().replaceAll(':', '')}`
+  const box = wipes[wipe][drawn ? 'true' : 'false']
+
+  const shared = {
+    d,
+    fill: 'none',
+    stroke: 'currentColor',
+    strokeWidth: 2,
+    strokeLinecap: 'round',
+    vectorEffect: 'non-scaling-stroke',
+  } as const
+
+  return (
+    <svg
+      viewBox="0 0 100 100"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      className="absolute inset-0 size-full overflow-visible"
+    >
+      <clipPath id={clipId} clipPathUnits="userSpaceOnUse">
+        <rect
+          x={box.x}
+          y={box.y}
+          width={box.w}
+          height={box.h}
+          className="transition-all duration-700 ease-out"
+        />
+      </clipPath>
+      <path {...shared} className="text-neutral-200" />
+      <g clipPath={`url(#${clipId})`}>
+        <path {...shared} className="text-brand-500" />
+      </g>
+    </svg>
+  )
+}
+
+/**
+ * The gap between two steps: a straight drop while the cards are stacked full
+ * width, and an S-curve sweeping across to the opposite side once they sit on
+ * alternating halves. `23` and `77` are the horizontal centres of the two
+ * `46%`-wide cards, so each leg leaves and arrives dead centre — right where
+ * the numbered badge sits.
+ */
+function RouteCurve({ toRight, drawn }: { toRight: boolean; drawn: boolean }) {
+  return (
+    <div aria-hidden="true" className="relative h-20 w-full sm:h-24 lg:h-32">
+      <div className="lg:hidden">
+        <RouteLeg d="M50 0 L50 100" drawn={drawn} wipe="down" />
+      </div>
+      <div className="hidden lg:block">
+        <RouteLeg
+          d={
+            toRight
+              ? 'M23 0 C23 38, 26 50, 38 50 L62 50 C74 50, 77 62, 77 100'
+              : 'M77 0 C77 38, 74 50, 62 50 L38 50 C26 50, 23 62, 23 100'
+          }
+          drawn={drawn}
+          wipe={toRight ? 'right' : 'left'}
+        />
+      </div>
+    </div>
+  )
+}
+
+/**
+ * Where in the viewport a step counts as "reached" — a little below the
+ * middle, so a step lights up as it settles into the reading position rather
+ * than the moment its first pixel appears.
+ */
+const ACTIVATION_LINE = 0.62
+
+/**
+ * Drives the roadmap from the scroll position: returns the index of the
+ * furthest step reached. Step 1 is always lit, so the route never starts
+ * entirely dead.
+ */
+function useFurthestStep(cardRefs: React.RefObject<(HTMLElement | null)[]>) {
+  const [reached, setReached] = useState(0)
+
+  useEffect(() => {
+    let frame = 0
+
+    const measure = () => {
+      frame = 0
+      const line = window.innerHeight * ACTIVATION_LINE
+
+      let passed = 0
+      for (const card of cardRefs.current ?? []) {
+        if (!card) continue
+        const box = card.getBoundingClientRect()
+        // Measured 40% down the card rather than at its top edge: a card only
+        // counts as reached once it is properly on screen, not as it enters.
+        if (box.top + box.height * 0.4 <= line) passed += 1
+      }
+      setReached(Math.max(0, passed - 1))
+    }
+
+    // Scroll fires far more often than the screen refreshes; coalesce onto the
+    // frame so the layout reads stay off the critical path.
+    const schedule = () => {
+      frame ||= requestAnimationFrame(measure)
+    }
+
+    measure()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+
+    return () => {
+      if (frame) cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+    }
+  }, [cardRefs])
+
+  return reached
+}
+
 export function HowItWorks() {
+  const cardRefs = useRef<(HTMLElement | null)[]>([])
+  const reached = useFurthestStep(cardRefs)
+
   return (
     <Section id="how-it-works" spacing="lg" divider aria-labelledby="how-it-works-title">
       <Reveal>
@@ -65,45 +212,62 @@ export function HowItWorks() {
         </div>
       </Reveal>
 
-      <ol className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
+      <ol className="mt-20">
         {steps.map((step, index) => {
           const Icon = step.icon
+          const active = index <= reached
+          const current = index === reached
+          const onLeft = index % 2 === 0
+
           return (
-            <li key={step.n} className="relative">
-              <Reveal delay={index * 70} className="h-full">
-                <article className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-brand-200">
+            <li key={step.n}>
+              <div data-active={active} className="roadmap-step">
+                <article
+                  ref={(node) => {
+                    cardRefs.current[index] = node
+                  }}
+                  className={cn(
+                    'roadmap-card relative rounded-3xl border border-neutral-200 bg-white p-6 pt-9 text-center shadow-sm sm:p-7 sm:pt-10 lg:w-[46%]',
+                    onLeft ? 'lg:mr-auto' : 'lg:ml-auto',
+                  )}
+                >
+                  {/* Straddles the top edge so the incoming leg of the route
+                      terminates inside the number. */}
                   <span
                     aria-hidden="true"
-                    className="inline-flex size-8 items-center justify-center rounded-full bg-brand-500 text-sm font-semibold text-white"
+                    className={cn(
+                      'roadmap-node absolute -top-5 left-1/2 flex size-10 -translate-x-1/2 items-center justify-center rounded-full bg-brand-500 text-sm font-semibold text-white ring-4 ring-white',
+                      // The halo marks the step the reader is on right now.
+                      current && 'shadow-[0_0_0_8px_rgb(0_96_240/0.1)]',
+                    )}
                   >
                     {step.n}
                   </span>
 
-                  <span className="mt-5 flex size-28 self-center items-center justify-center rounded-full bg-brand-50 ring-1 ring-brand-100">
-                    <Icon
-                      aria-hidden="true"
-                      strokeWidth={1.5}
-                      className="size-11 text-brand-500"
-                    />
+                  <span className="mx-auto flex size-20 items-center justify-center rounded-2xl bg-brand-50 ring-1 ring-brand-100">
+                    <Icon aria-hidden="true" strokeWidth={1.5} className="size-9 text-brand-500" />
                   </span>
 
-                  <h3 className="mt-6 text-center text-lg font-semibold tracking-tight">
+                  <h3 className="mt-5 text-lg font-semibold tracking-tight">
                     <span className="sr-only">Step {step.n}: </span>
                     {step.title}
                   </h3>
-                  <p className="mt-2.5 text-center text-sm leading-relaxed text-pretty text-neutral-600">
+                  <p className="mx-auto mt-2 max-w-sm text-sm leading-relaxed text-pretty text-neutral-600">
                     {step.body}
                   </p>
                 </article>
-              </Reveal>
-              {index < steps.length - 1 ? <Connector dotted className="top-1/2" /> : null}
+              </div>
+
+              {index < steps.length - 1 ? (
+                <RouteCurve toRight={onLeft} drawn={index + 1 <= reached} />
+              ) : null}
             </li>
           )
         })}
       </ol>
 
       <Reveal>
-        <div className="mt-6 rounded-[2rem] border border-brand-100 bg-brand-50/60 p-6 sm:p-10">
+        <div className="mt-20 rounded-[2rem] border border-brand-100 bg-brand-50/60 p-6 sm:p-10">
           <div className="mx-auto max-w-xl text-center">
             <h3 className="text-2xl font-semibold tracking-[-0.02em] text-balance sm:text-3xl">
               What happens after someone scans?

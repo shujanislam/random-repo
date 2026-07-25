@@ -106,6 +106,37 @@
     }
   }
 
+  /* ── Roadmap steps ───────────────────────────────────────────────────
+     A step the scroll has not reached yet reads as "not yet": drained of
+     colour and pushed back. Gated behind `scripting: enabled` for the same
+     reason as `.reveal` — without JS nothing ever activates, and a column of
+     permanently grey steps is worse than no effect at all.
+
+     Scale goes on the `scale` property rather than `transform`, so it does
+     not fight the node's translate-based centring. */
+  @media (scripting: enabled) {
+    .roadmap-step,
+    .roadmap-step .roadmap-card,
+    .roadmap-step .roadmap-node {
+      transition:
+        opacity 0.55s var(--ease-out-expo),
+        filter 0.55s var(--ease-out-expo),
+        scale 0.55s var(--ease-out-expo),
+        box-shadow 0.55s var(--ease-out-expo);
+    }
+    .roadmap-step[data-active='false'] {
+      opacity: 0.45;
+      filter: grayscale(1);
+    }
+    .roadmap-step[data-active='false'] .roadmap-card {
+      scale: 0.97;
+      box-shadow: none;
+    }
+    .roadmap-step[data-active='false'] .roadmap-node {
+      scale: 0.75;
+    }
+  }
+
   /* ── Marker highlight ────────────────────────────────────────────────
      Gold cannot carry text, but it is perfect as a swipe of highlighter
      *behind* dark text. This is the accent's primary job on the page. */

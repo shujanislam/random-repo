@@ -14,7 +14,7 @@ export function AppPreview() {
         <Reveal className="flex justify-center lg:order-2 lg:justify-end">
           <PhoneFrame>
             <Image
-              src="/media/app-screenshot.webp"
+              src="/media/client-app.png"
               alt="The TruTag owner app, showing a registered vehicle and shortcuts to profile, contact settings, QR code and adding a vehicle."
               width={720}
               height={1462}
