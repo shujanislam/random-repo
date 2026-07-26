@@ -3,49 +3,12 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { ShieldCheck } from 'lucide-react'
 
+import { ScanFlowDemo } from '@/components/sections/scan-flow'
 import { Reveal } from '@/components/ui/reveal'
 import { Section } from '@/components/ui/section'
 import { SectionHeading } from '@/components/ui/section-heading'
-import { scanFlow, steps } from '@/lib/content'
+import { steps } from '@/lib/content'
 import { cn } from '@/lib/utils'
-
-/**
- * The connector between two cards in a horizontal flow. It is `w-6` to match
- * the `lg:gap-6` it sits inside, and only appears at the breakpoint where the
- * cards are actually in a row — stacked cards read in order without it.
- */
-function Connector({ dotted = false, className }: { dotted?: boolean; className?: string }) {
-  return (
-    <span
-      aria-hidden="true"
-      className={cn(
-        'absolute left-full hidden w-6 -translate-y-1/2 justify-center lg:flex',
-        className,
-      )}
-    >
-      <svg
-        viewBox="0 0 24 8"
-        fill="none"
-        className={cn('w-5', dotted ? 'text-neutral-300' : 'text-brand-300')}
-      >
-        <path
-          d="M1 4h14"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeDasharray={dotted ? '0.5 3.5' : undefined}
-        />
-        <path
-          d="m17.5 1 3 3-3 3"
-          stroke="currentColor"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-    </span>
-  )
-}
 
 /** How the blue overlay is revealed: along the direction the route travels. */
 type Wipe = 'right' | 'left' | 'down'
@@ -268,36 +231,23 @@ export function HowItWorks() {
 
       <Reveal>
         <div className="mt-20 rounded-[2rem] border border-brand-100 bg-brand-50/60 p-6 sm:p-10">
-          <div className="mx-auto max-w-xl text-center">
-            <h3 className="text-2xl font-semibold tracking-[-0.02em] text-balance sm:text-3xl">
+          <div className="mx-auto flex max-w-xl flex-col items-center text-center">
+            <span className="inline-flex items-center gap-2 rounded-full bg-white px-3 py-1 text-[0.6875rem] font-bold tracking-[0.12em] text-neutral-600 uppercase ring-1 ring-brand-100">
+              <span aria-hidden="true" className="relative flex size-1.5">
+                <span className="absolute inset-0 animate-ping rounded-full bg-brand-400" />
+                <span className="relative size-1.5 rounded-full bg-brand-500" />
+              </span>
+              Live walkthrough
+            </span>
+            <h3 className="mt-4 text-2xl font-semibold tracking-[-0.02em] text-balance sm:text-3xl">
               What happens after someone scans?
             </h3>
             <p className="mt-2.5 leading-relaxed text-neutral-600">
-              Secure, private, and always on your terms.
+              Secure, private, and always on your terms — watch it play out on both phones.
             </p>
           </div>
 
-          <ol className="mt-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-5 lg:gap-6">
-            {scanFlow.map((item, index) => {
-              const Icon = item.icon
-              return (
-                <li key={item.label} className="relative flex flex-col items-center text-center">
-                  <span className="flex size-20 items-center justify-center rounded-full bg-white shadow-sm ring-1 ring-brand-100">
-                    <Icon aria-hidden="true" strokeWidth={1.5} className="size-8 text-brand-500" />
-                  </span>
-                  <span className="mt-4 rounded-full bg-accent px-3 py-1 text-xs font-semibold text-neutral-950">
-                    {item.label}
-                  </span>
-                  <p className="mt-3 max-w-[22ch] text-sm leading-relaxed text-pretty text-neutral-600">
-                    {item.body}
-                  </p>
-                  {/* Pinned to the icon disc rather than the item's centre,
-                      which drifts with the length of each caption. */}
-                  {index < scanFlow.length - 1 ? <Connector className="top-10" /> : null}
-                </li>
-              )
-            })}
-          </ol>
+          <ScanFlowDemo />
         </div>
       </Reveal>
     </Section>

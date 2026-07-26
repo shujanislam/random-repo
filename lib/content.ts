@@ -66,33 +66,44 @@ export const steps: Step[] = [
 
 /* ── What happens after a scan ──────────────────────────────────────── */
 
-export type ScanFlowStep = { icon: LucideIcon; label: string; body: string }
+export type ScanFlowStep = {
+  icon: LucideIcon
+  label: string
+  body: string
+  /** Whose phone the step happens on — the demo flips sides on this. */
+  side: 'them' | 'you'
+}
 
 export const scanFlow: ScanFlowStep[] = [
   {
     icon: ScanLine,
     label: 'QR scan',
     body: 'Someone points a phone camera at your TruTag sticker.',
+    side: 'them',
   },
   {
     icon: ShieldCheck,
     label: 'Secure page',
     body: 'They land on a TruTag page showing limited vehicle info.',
+    side: 'them',
   },
   {
     icon: MessageSquare,
     label: 'Message or call',
     body: 'They pick a reason, then send a message or request a private call.',
+    side: 'them',
   },
   {
     icon: BellRing,
     label: 'You are notified',
     body: 'The alert reaches you instantly in the TruTag app.',
+    side: 'you',
   },
   {
     icon: Lock,
     label: 'You respond',
     body: 'Reply or take the call through the relay. Your number stays hidden.',
+    side: 'you',
   },
 ]
 

@@ -13,7 +13,7 @@ import { SectionHeading } from '@/components/ui/section-heading'
 function ScannerScreen() {
   return (
     <Image
-      src="/media/webapp-screenshot.jpeg"
+      src="/media/client-app-2.jpeg"
       alt="The screen a person sees after scanning a TruTag sticker: the registered vehicle plate, then quick alerts to pick from — accident detected, emergency alert, wrong parking, or send a message."
       width={720}
       height={1440}

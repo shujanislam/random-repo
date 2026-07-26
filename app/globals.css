@@ -35,6 +35,50 @@
   --color-accent-ink: #7a5c00;
 
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* ── Scan demo ───────────────────────────────────────────────────────
+     Animations for the "what happens after someone scans" walkthrough.
+     Only the screen currently on show is mounted, so none of these run in
+     the background. */
+
+  /* The gold line travelling down the sticker in the camera viewfinder.
+     8rem is the sticker's own height (`size-32`). */
+  --animate-scan-sweep: scan-sweep 1.2s ease-in-out infinite alternate;
+  @keyframes scan-sweep {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(8rem);
+    }
+  }
+
+  /* A screen taking over from the previous one. */
+  --animate-scan-enter: scan-enter 0.28s var(--ease-out-expo) both;
+  @keyframes scan-enter {
+    from {
+      opacity: 0;
+      transform: translateY(0.75rem) scale(0.98);
+    }
+  }
+
+  /* A notification dropping in from above the top edge. */
+  --animate-scan-drop: scan-drop 0.3s var(--ease-out-expo) 0.075s both;
+  @keyframes scan-drop {
+    from {
+      opacity: 0;
+      transform: translateY(-160%);
+    }
+  }
+
+  /* Rows, bubbles and chips arriving in sequence; the delay is per-element. */
+  --animate-scan-rise: scan-rise 0.25s var(--ease-out-expo) both;
+  @keyframes scan-rise {
+    from {
+      opacity: 0;
+      transform: translateY(0.5rem);
+    }
+  }
 }
 
 @layer base {
@@ -153,6 +197,23 @@
     border-radius: 0.2em;
     transform: skew(-7deg) rotate(-0.6deg);
     z-index: -1;
+  }
+
+  /* ── Scan demo timer bar ─────────────────────────────────────────────
+     The gold bar under the step the demo is playing, counting down to the
+     next one. Scaled rather than animated on `width`, so it stays on the
+     compositor. */
+  .scan-timer {
+    transform-origin: left;
+    animation: scan-timer var(--scan-duration, 2200ms) linear both;
+  }
+  @keyframes scan-timer {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
   }
 
   /* Subtle dot grid for dark panels — adds depth without another image. */
