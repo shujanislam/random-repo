@@ -213,11 +213,10 @@ export type Plan = {
   name: string
   blurb: string
   icon: LucideIcon
-  /**
-   * TODO(trutag): set the launch price, e.g. '₹499'. While this is null the
-   * card honestly reads “Announced at launch” rather than inventing a number.
-   */
+  /** Live price. While this is null the card reads “Coming soon”. */
   price: string | null
+  /** Struck-through list price, shown next to `price` when both are set. */
+  mrp?: string
   priceNote: string
   includes: string[]
   featured?: boolean
@@ -229,7 +228,8 @@ export const plans: Plan[] = [
     name: 'Bike tag',
     blurb: 'One weatherproof tag sized for two-wheelers.',
     icon: Sticker,
-    price: null,
+    price: '₹499',
+    mrp: '₹599',
     priceNote: 'per tag, delivered',
     includes: ['1 smart QR sticker', 'Lifetime tag activation', 'Relayed calls and messages'],
   },
@@ -238,7 +238,8 @@ export const plans: Plan[] = [
     name: 'Car tag',
     blurb: 'The full-size windscreen tag, our most popular format.',
     icon: QrCode,
-    price: null,
+    price: '₹499',
+    mrp: '₹599',
     priceNote: 'per tag, delivered',
     includes: [
       '1 smart QR sticker',
@@ -321,16 +322,16 @@ export const team: TeamMember[] = [
     photo: '/founder/injamamul.jpeg',
   },
   {
-    name: 'Mukut Boruah',
-    role: 'Chief Growth Officer',
-    note: 'Runs partnerships and takes TruTag to new cities.',
-    photo: '/founder/mukut.jpeg',
-  },
-  {
     name: 'Raju Ahmed',
     role: 'Chief Business Development Officer',
     note: 'Works with dealers, fleets and RWAs on the ground.',
     photo: '/founder/raju.jpeg',
+  },
+  {
+    name: 'Mukut Boruah',
+    role: 'Chief Growth Officer',
+    note: 'Runs partnerships and takes TruTag to new cities.',
+    photo: '/founder/mukut.jpeg',
   },
   {
     name: 'Nagodip Adhikary',

@@ -14,7 +14,7 @@ function PriceLine({ plan }: { plan: Plan }) {
   if (!plan.price) {
     return (
       <p className="text-lg font-semibold tracking-tight text-neutral-900">
-        Announced at launch
+        Coming soon
         <span className="mt-1 block text-sm font-normal text-neutral-500">
           Write in for early-access pricing
         </span>
@@ -23,10 +23,18 @@ function PriceLine({ plan }: { plan: Plan }) {
   }
 
   return (
-    <p className="flex items-baseline gap-2">
-      <span className="text-4xl font-semibold tracking-tight tabular-nums">{plan.price}</span>
-      <span className="text-sm text-neutral-500">{plan.priceNote}</span>
-    </p>
+    <div>
+      {plan.mrp ? (
+        <p className="text-sm text-neutral-500">
+          MRP{' '}
+          <span className="tabular-nums line-through decoration-neutral-400">{plan.mrp}</span>
+        </p>
+      ) : null}
+      <p className="mt-1 flex items-baseline gap-2">
+        <span className="text-4xl font-semibold tracking-tight tabular-nums">{plan.price}</span>
+        <span className="text-sm text-neutral-500">{plan.priceNote}</span>
+      </p>
+    </div>
   )
 }
 
