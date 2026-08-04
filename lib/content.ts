@@ -230,8 +230,8 @@ export const plans: Plan[] = [
     icon: Sticker,
     price: '₹499',
     mrp: '₹599',
-    priceNote: 'per tag, delivered',
-    includes: ['1 smart QR sticker', 'Lifetime tag activation', 'Relayed calls and messages'],
+    priceNote: '',
+    includes: ['2 smart QR stickers', 'Lifetime tag activation', 'Relayed calls and messages'],
   },
   {
     id: 'car',
@@ -240,9 +240,9 @@ export const plans: Plan[] = [
     icon: QrCode,
     price: '₹499',
     mrp: '₹599',
-    priceNote: 'per tag, delivered',
+    priceNote: '',
     includes: [
-      '1 smart QR sticker',
+      '2 smart QR stickers',
       'Lifetime tag activation',
       'Relayed calls and messages',
       'Priority support',
@@ -255,9 +255,9 @@ export const plans: Plan[] = [
     blurb: 'Cover the whole household in one order.',
     icon: Smartphone,
     price: null,
-    priceNote: 'for 3 tags, delivered',
+    priceNote: '',
     includes: [
-      '3 smart QR stickers',
+      '2 smart QR stickers',
       'Mix car and bike sizes',
       'One account, separate rules per tag',
       'Priority support',
@@ -326,12 +326,6 @@ export const team: TeamMember[] = [
     role: 'Chief Business Development Officer',
     note: 'Works with dealers, fleets and RWAs on the ground.',
     photo: '/founder/raju.jpeg',
-  },
-  {
-    name: 'Mukut Boruah',
-    role: 'Chief Growth Officer',
-    note: 'Runs partnerships and takes TruTag to new cities.',
-    photo: '/founder/mukut.jpeg',
   },
   {
     name: 'Nagodip Adhikary',

@@ -14,7 +14,7 @@ function Monogram({ name }: { name: string }) {
   return (
     <span
       aria-hidden="true"
-      className="flex size-14 shrink-0 items-center justify-center rounded-full bg-brand-50 text-sm font-semibold tracking-wide text-brand-700 ring-1 ring-brand-100"
+      className="flex size-20 shrink-0 items-center justify-center rounded-full bg-brand-50 text-base font-semibold tracking-wide text-brand-700 ring-1 ring-brand-100"
     >
       {initials(name)}
     </span>
@@ -33,28 +33,28 @@ function Portrait({ src }: { src: string }) {
     <Image
       src={src}
       alt=""
-      width={112}
-      height={112}
-      className="size-14 shrink-0 rounded-full bg-neutral-100 object-cover object-top ring-1 ring-neutral-200"
+      width={160}
+      height={160}
+      className="size-20 shrink-0 rounded-full bg-neutral-100 object-cover object-top ring-1 ring-neutral-200"
     />
   )
 }
 
 function MemberCard({ member }: { member: TeamMember }) {
   return (
-    <article className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-6 shadow-sm transition-colors duration-200 hover:border-neutral-300">
-      <div className="flex items-center gap-4">
+    <article className="flex h-full flex-col rounded-3xl border border-neutral-200 bg-white p-8 shadow-sm transition-colors duration-200 hover:border-neutral-300">
+      <div className="flex items-center gap-5">
         {member.photo ? (
           <Portrait src={member.photo} />
         ) : (
           <Monogram name={member.name} />
         )}
         <div className="min-w-0">
-          <h3 className="font-semibold leading-tight">{member.name}</h3>
-          <p className="mt-1 text-sm text-brand-600">{member.role}</p>
+          <h3 className="text-lg font-semibold leading-tight">{member.name}</h3>
+          <p className="mt-1.5 text-sm text-brand-600">{member.role}</p>
         </div>
       </div>
-      <p className="mt-5 text-sm leading-relaxed text-neutral-600">{member.note}</p>
+      <p className="mt-6 text-[0.9375rem] leading-relaxed text-neutral-600">{member.note}</p>
     </article>
   )
 }
@@ -71,7 +71,7 @@ export function Team() {
         />
       </Reveal>
 
-      <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <ul className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {team.map((member, index) => (
           <li key={member.name} className="h-full">
             <Reveal delay={index * 60} className="h-full">
